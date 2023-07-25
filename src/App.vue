@@ -1,10 +1,16 @@
 <template>
   <div>
-    <h1>SVG测试</h1>
-    <!-- <svg-icon name="home" color="pink" width="100px" height="100px"></svg-icon> -->
+    <h1>test</h1>
   </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped lang="scss">
+div {
+  h1 {
+    color: $base-color;
+  }
+}
+
+</style>
