@@ -1,9 +1,8 @@
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import type { App } from 'vue'
 
-
 const allGlobalComponents = {
-  SvgIcon
+  SvgIcon,
 }
 
 export default {

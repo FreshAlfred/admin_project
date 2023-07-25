@@ -12,5 +12,4 @@ div {
     color: $base-color;
   }
 }
-
 </style>
