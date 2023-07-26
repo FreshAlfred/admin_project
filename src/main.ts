@@ -20,13 +20,13 @@ import globleComponent from '@/components'
 app.use(globleComponent)
 import '@/style/index.scss'
 
-axios({
-  method: 'post',
-  url: '/api/user/login',
-  data: {
-    username: 'admin',
-    password: '123456',
-  },
-})
+// axios({
+//   method: 'post',
+//   url: '/api/user/login',
+//   data: {
+//     username: 'admin',
+//     password: '123456',
+//   },
+// })
 
 app.mount('#app')

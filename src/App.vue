@@ -1,15 +1,14 @@
 <template>
   <div>
-    <h1>test</h1>
+    <h1>我自己的data {{ data }}</h1>
+    <Father :data="data"></Father>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Father from '@/components/Test/Father.vue'
 
-<style scoped lang="scss">
-div {
-  h1 {
-    color: $base-color;
-  }
-}
-</style>
+const data = 'alfred'
+</script>
+
+<style scoped></style>
