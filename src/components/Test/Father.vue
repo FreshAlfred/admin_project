@@ -1,21 +1,18 @@
 <template>
-    <div>
-        <h1>i am father</h1>
-        <h2>收到的data： {{ data }}</h2>
-        <button @click="change">点我</button>
-    </div>
+  <div>
+    <h1>i am father</h1>
+    <h2>收到的data： {{ data }}</h2>
+    <button @click="change">点我</button>
+  </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps({
-    data: String
+  data: String,
 })
 const change = () => {
-    props.data = 'hello'
+  props.data = 'hello'
 }
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
