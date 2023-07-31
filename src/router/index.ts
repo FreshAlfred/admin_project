@@ -20,8 +20,8 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     redirect: '/404',
-    name: 'Any'
-  }
+    name: 'Any',
+  },
 ]
 
 let router = createRouter({
