@@ -5,7 +5,7 @@ export interface loginForm {
   password: string
 }
 interface dataType {
-  token?: string,
+  token?: string
   message?: string
 }
 
