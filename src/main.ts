@@ -9,11 +9,10 @@ import 'virtual:svg-icons-register'
 import globleComponent from '@/components'
 // 安装自定义插件
 import '@/style/index.scss'
-import { createPinia } from 'pinia'
+import pinia from './store'
 import router from './router'
 
 const app = createApp(App)
-const pinia = createPinia()
 
 app.use(pinia)
 app.use(globleComponent)
