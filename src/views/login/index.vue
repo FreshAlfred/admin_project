@@ -3,17 +3,36 @@
     <el-row>
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
-        <el-form class="login_form" :model="loginForm" :rules="rules" ref="loginForms">
+        <el-form
+          class="login_form"
+          :model="loginForm"
+          :rules="rules"
+          ref="loginForms"
+        >
           <h1>hello</h1>
           <h2>欢迎来到Alfred甄选</h2>
           <el-form-item prop="username">
-            <el-input :prefix-icon="User" v-model="loginForm.username"></el-input>
+            <el-input
+              :prefix-icon="User"
+              v-model="loginForm.username"
+            ></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input type="password" :prefix-icon="Lock" v-model="loginForm.password" show-password></el-input>
+            <el-input
+              type="password"
+              :prefix-icon="Lock"
+              v-model="loginForm.password"
+              show-password
+            ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button @click="login" :loading="loading" class="login_btn" type="primary" size="default">
+            <el-button
+              @click="login"
+              :loading="loading"
+              class="login_btn"
+              type="primary"
+              size="default"
+            >
               登录
             </el-button>
           </el-form-item>
@@ -61,14 +80,14 @@ let loginForm = reactive({
 const validatorUsername = (rules: any, value: any, callback: any) => {
   // rulers为校验对象, value为校验的值
   if (value.length >= 5 && value.length <= 10) {
-    callback();
+    callback()
   } else {
     callback(new Error('账号5~10位'))
   }
 }
 const validatorPassword = (rules: any, value: any, callback: any) => {
   if (value.length >= 6 && value.length <= 10) {
-    callback();
+    callback()
   } else {
     callback(new Error('密码6~10位'))
   }
@@ -83,7 +102,7 @@ const rules = {
     //   message: '长度在 6 到 10 个字符',
     //   trigger: 'change',
     // },
-    { trigger: 'change', validator: validatorUsername }
+    { trigger: 'change', validator: validatorUsername },
   ],
   password: [
     // {
@@ -93,7 +112,7 @@ const rules = {
     //   message: '长度在 6 到 10 个字符',
     //   trigger: 'change',
     // },
-    { trigger: 'change', validator: validatorPassword }
+    { trigger: 'change', validator: validatorPassword },
   ],
 }
 </script>

@@ -11,7 +11,7 @@ let useUserStore = defineStore('User', {
   state: (): UserState => {
     return {
       token: GET_TOKEN(),
-      menuRoutes: routes
+      menuRoutes: routes,
     }
   },
   actions: {

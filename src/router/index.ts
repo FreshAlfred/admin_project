@@ -7,8 +7,8 @@ export const routes = [
     component: () => import('@/views/login/index.vue'),
     meta: {
       title: '登录',
-      hidden: true
-    }
+      hidden: true,
+    },
   },
   // 登录成功以后展示数据的路由
   {
@@ -23,16 +23,15 @@ export const routes = [
         meta: {
           title: '首页',
           hidden: false,
-          icon: 'HomeFilled'
-        }
-      
-      }
+          icon: 'HomeFilled',
+        },
+      },
     ],
     meta: {
       title: 'layout',
       hidden: false,
-      icon: 'Avatar'
-    }
+      icon: 'Avatar',
+    },
   },
   {
     path: '/404',
@@ -40,8 +39,8 @@ export const routes = [
     component: () => import('@/views/404/index.vue'),
     meta: {
       title: '404',
-      hidden: true
-    }
+      hidden: true,
+    },
   },
   {
     path: '/:pathMatch(.*)*',
@@ -49,8 +48,8 @@ export const routes = [
     name: 'Any',
     meta: {
       title: '任意路由',
-      hidden: true
-    }
+      hidden: true,
+    },
   },
 ]
 
