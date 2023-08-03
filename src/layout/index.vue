@@ -1,21 +1,33 @@
 <template>
   <div class="layout_container">
-    <div class="layout_slider" :class="{ fold: LayOutSettingStore.isFold ? true : false }">
+    <div
+      class="layout_slider"
+      :class="{ fold: LayOutSettingStore.isFold ? true : false }"
+    >
       <Logo></Logo>
       <el-scrollbar class="scrollbar">
-        <el-menu 
-        :collapsed="LayOutSettingStore.isFold ? true : false"
-        :collapse="LayOutSettingStore.isFold ? true : false"
-        background-color="#001529" text-color="white" :default-active="$route.path"
-          active-text-color="yellowgreen">
+        <el-menu
+          :collapsed="LayOutSettingStore.isFold ? true : false"
+          :collapse="LayOutSettingStore.isFold ? true : false"
+          background-color="#001529"
+          text-color="white"
+          :default-active="$route.path"
+          active-text-color="yellowgreen"
+        >
           <Menu :menuList="userStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
-    <div class="layout_tabbar" :class="{ fold: LayOutSettingStore.isFold ? true : false }">
+    <div
+      class="layout_tabbar"
+      :class="{ fold: LayOutSettingStore.isFold ? true : false }"
+    >
       <Tabbar></Tabbar>
     </div>
-    <div class="layout_main" :class="{ fold: LayOutSettingStore.isFold ? true : false }">
+    <div
+      class="layout_main"
+      :class="{ fold: LayOutSettingStore.isFold ? true : false }"
+    >
       <Main></Main>
     </div>
   </div>
@@ -27,16 +39,16 @@ import Menu from './menu/index.vue'
 // 获取用户相关的小仓库
 import useUserStore from '@/store/modules/user'
 import useLayoutSettingStore from '@/store/modules/setting'
-import Main from '@/layout/main/index.vue';
-import { useRoute } from 'vue-router';
-import Tabbar from './tabbar/index.vue';
-let $route = useRoute();
+import Main from '@/layout/main/index.vue'
+import { useRoute } from 'vue-router'
+import Tabbar from './tabbar/index.vue'
+let $route = useRoute()
 let userStore = useUserStore()
 let LayOutSettingStore = useLayoutSettingStore()
 </script>
 <script lang="ts">
 export default {
-  name: 'Layout'
+  name: 'Layout',
 }
 </script>
 
@@ -44,7 +56,6 @@ export default {
 .layout_container {
   width: 100%;
   height: 100vh;
-
 
   .layout_slider {
     color: white;
@@ -60,8 +71,6 @@ export default {
       .el-menu {
         border-right: none;
       }
-
-
     }
 
     &.fold {
@@ -78,9 +87,9 @@ export default {
     left: $base-menu-width;
 
     &.fold {
-        width: calc(100vw - $base-menu-min-width);
-        left: $base-menu-min-width;
-      }
+      width: calc(100vw - $base-menu-min-width);
+      left: $base-menu-min-width;
+    }
   }
 
   .layout_main {
@@ -94,8 +103,8 @@ export default {
     overflow: auto;
     transition: all 0.3s;
     &.fold {
-        left: $base-menu-min-width;
-        width: calc(100vw - $base-menu-min-width);
+      left: $base-menu-min-width;
+      width: calc(100vw - $base-menu-min-width);
     }
   }
 }

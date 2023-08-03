@@ -1,14 +1,12 @@
 <template>
-    <router-view v-slot="{ Component }">
-        <transition name="fade">
-            <component :is="Component" />
-        </transition>
-    </router-view>
+  <router-view v-slot="{ Component }">
+    <transition name="fade">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <script lang="ts">
 export default {
@@ -16,16 +14,15 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .fade-enter-from {
-    opacity: 0;
+  opacity: 0;
 }
 .fade-enter-to {
-    opacity: 1;
-    display:none
+  opacity: 1;
+  display: none;
 }
 .fade-enter-active {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 </style>

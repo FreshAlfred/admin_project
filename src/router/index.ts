@@ -41,8 +41,8 @@ export const routes = [
     meta: {
       title: '数据',
       hidden: false,
-      icon: 'PieChart'
-    }
+      icon: 'PieChart',
+    },
   },
   {
     path: '/acl',
@@ -51,7 +51,7 @@ export const routes = [
     meta: {
       title: '权限管理',
       hidden: false,
-      icon: 'Lock'
+      icon: 'Lock',
     },
     children: [
       {
@@ -61,8 +61,8 @@ export const routes = [
         meta: {
           title: '用户管理',
           hidden: false,
-          icon: 'User'
-        }
+          icon: 'User',
+        },
       },
       {
         path: '/acl/role',
@@ -71,8 +71,8 @@ export const routes = [
         meta: {
           title: '角色管理',
           hidden: false,
-          icon: 'UserFilled'
-        }
+          icon: 'UserFilled',
+        },
       },
       {
         path: '/acl/permission',
@@ -81,10 +81,10 @@ export const routes = [
         meta: {
           title: '菜单管理',
           hidden: false,
-          icon: 'Monitor'
-        }
-      }
-    ]
+          icon: 'Monitor',
+        },
+      },
+    ],
   },
   {
     path: '/product',
@@ -93,7 +93,7 @@ export const routes = [
     meta: {
       title: '商品管理',
       hidden: false,
-      icon: 'Goods'
+      icon: 'Goods',
     },
     children: [
       {
@@ -103,8 +103,8 @@ export const routes = [
         meta: {
           title: '品牌管理',
           hidden: false,
-          icon: 'ShoppingCart'
-        }
+          icon: 'ShoppingCart',
+        },
       },
       {
         path: '/product/attr',
@@ -113,8 +113,8 @@ export const routes = [
         meta: {
           title: '属性管理',
           hidden: false,
-          icon: 'ChromeFilled'
-        }
+          icon: 'ChromeFilled',
+        },
       },
       {
         path: '/product/spu',
@@ -123,8 +123,8 @@ export const routes = [
         meta: {
           title: 'spu管理',
           hidden: false,
-          icon: 'Calendar'
-        }
+          icon: 'Calendar',
+        },
       },
       {
         path: '/product/sku',
@@ -133,10 +133,10 @@ export const routes = [
         meta: {
           title: 'sku管理',
           hidden: false,
-          icon: 'Orange'
-        }
-      }
-    ]
+          icon: 'Orange',
+        },
+      },
+    ],
   },
   {
     path: '/404',
