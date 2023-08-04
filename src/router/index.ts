@@ -30,8 +30,8 @@ export const routes = [
     ],
     meta: {
       title: 'layout',
-      hidden: false,
-      icon: 'Avatar',
+      hidden: true,
+      icon: '',
     },
   },
   {
@@ -48,6 +48,7 @@ export const routes = [
     path: '/acl',
     component: () => import('@/layout/index.vue'),
     name: 'acl',
+    redirect: '/acl/user',
     meta: {
       title: '权限管理',
       hidden: false,

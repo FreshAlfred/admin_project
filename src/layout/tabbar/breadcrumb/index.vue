@@ -5,13 +5,19 @@
   <!-- 面包屑 -->
 
   <el-breadcrumb separator-icon="ArrowRight">
-    <el-breadcrumb-item>homepage</el-breadcrumb-item>
-    <el-breadcrumb-item>xixi</el-breadcrumb-item>
+    <el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index" v-show="!item.meta.hidden" :to="item.path">
+      <el-icon style="margin: 0 5px;">
+        <component :is="item.meta.icon"></component>
+      </el-icon>
+      <span>{{ item.meta.title }}</span>
+    </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
 <script setup lang="ts">
 import useLayoutSettingStore from '@/store/modules/setting'
+import {useRoute} from 'vue-router'
+let $route = useRoute()
 let LayoutSettingStore = useLayoutSettingStore()
 
 const changeIcon = () => {
