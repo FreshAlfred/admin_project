@@ -29,7 +29,7 @@ let useUserStore = defineStore('User', {
       }
     },
     async userInfo() {
-      let result = await reqUserInfo();
+      let result = await reqUserInfo()
       if (result.code === 200) {
         this.username = result.data.checkUser.username
         this.avatar = result.data.checkUser.avatar
@@ -41,8 +41,8 @@ let useUserStore = defineStore('User', {
       this.token = ''
       this.username = ''
       this.avatar = ''
-      REMOVE_TOKEN();
-    }
+      REMOVE_TOKEN()
+    },
   },
   getters: {},
 })
