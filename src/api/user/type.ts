@@ -7,8 +7,8 @@ export interface loginFormData {
 
 // 定义全部接口返回数据都拥有的ts类型
 export interface ResponseData {
-  code: number,
-  message: string,
+  code: number
+  message: string
   ok: boolean
 }
 
@@ -19,11 +19,10 @@ export interface loginResponseData extends ResponseData {
 
 export interface userInfoResponseData extends ResponseData {
   data: {
-    routes: string[],
-    buttons: string[],
-    roles: string[],
-    name: string,
+    routes: string[]
+    buttons: string[]
+    roles: string[]
+    name: string
     avatar: string
   }
 }
-

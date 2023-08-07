@@ -12,7 +12,7 @@ import '../node_modules/nprogress/nprogress.css'
 import '@/style/index.scss'
 import pinia from './store'
 import router from './router'
-import './permission';
+import './permission'
 const app = createApp(App)
 
 app.use(pinia)

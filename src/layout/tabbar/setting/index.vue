@@ -51,7 +51,7 @@ const fullScreen = () => {
     document.exitFullscreen()
   }
 }
-const logout =async () => {
+const logout = async () => {
   await userStore.userLogout()
   $router.push({ path: '/login', query: { redirect: $route.path } })
 }

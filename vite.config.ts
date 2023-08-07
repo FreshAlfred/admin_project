@@ -5,8 +5,8 @@ import path from 'path'
 // 引入svg插件
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 // https://vitejs.dev/config/
-export default defineConfig(({ command,mode }) => {
-  let env = loadEnv(mode, process.cwd());
+export default defineConfig(({ command, mode }) => {
+  let env = loadEnv(mode, process.cwd())
   return {
     plugins: [
       vue(),
@@ -41,8 +41,8 @@ export default defineConfig(({ command,mode }) => {
           target: env.VITE_SERVER,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
-        }
-      }
-    }
+        },
+      },
+    },
   }
 })

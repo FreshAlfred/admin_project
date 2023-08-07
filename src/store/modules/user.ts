@@ -3,7 +3,11 @@ import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
 
 import { defineStore } from 'pinia'
 import { routes } from '@/router'
-import type {loginFormData, loginResponseData, userInfoResponseData} from '@/api/user/type'
+import type {
+  loginFormData,
+  loginResponseData,
+  userInfoResponseData,
+} from '@/api/user/type'
 
 import type { UserState } from './types/type'
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
@@ -40,7 +44,7 @@ let useUserStore = defineStore('User', {
     },
     async userLogout() {
       let result = await reqLogout()
-      if(result.code === 200) {
+      if (result.code === 200) {
         this.token = ''
         this.username = ''
         this.avatar = ''
@@ -49,7 +53,6 @@ let useUserStore = defineStore('User', {
       } else {
         return Promise.reject(new Error(result.message))
       }
-      
     },
   },
   getters: {},
