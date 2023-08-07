@@ -77,7 +77,7 @@ const login = async () => {
 }
 let loginForm = reactive({
   username: 'admin',
-  password: '123456',
+  password: 'atguigu123',
 })
 const validatorUsername = (rules: any, value: any, callback: any) => {
   // rulers为校验对象, value为校验的值

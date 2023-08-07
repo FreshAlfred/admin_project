@@ -1,10 +1,10 @@
 // 创建用户相关的小仓库
-import { reqLogin, reqUserInfo } from '@/api/user'
+import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
 
 import { defineStore } from 'pinia'
 import { routes } from '@/router'
-// 引入数据类型
-import type { loginForm, loginResponseData } from '@/api/user/type'
+import type {loginFormData, loginResponseData, userInfoResponseData} from '@/api/user/type'
+
 import type { UserState } from './types/type'
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 
@@ -18,30 +18,38 @@ let useUserStore = defineStore('User', {
     }
   },
   actions: {
-    async userLogin(data: loginForm) {
+    async userLogin(data: loginFormData) {
       let result: loginResponseData = await reqLogin(data)
       if (result.code === 200) {
-        this.token = result.data.token as string
-        SET_TOKEN(result.data.token as string)
+        this.token = result.data as string
+        SET_TOKEN(result.data as string)
         return 'OK'
       } else {
-        return Promise.reject(new Error(result.data.message))
+        return Promise.reject(new Error(result.data))
       }
     },
     async userInfo() {
-      let result = await reqUserInfo()
+      let result: userInfoResponseData = await reqUserInfo()
       if (result.code === 200) {
-        this.username = result.data.checkUser.username
-        this.avatar = result.data.checkUser.avatar
+        this.username = result.data.name
+        this.avatar = result.data.avatar
+        return 'OK'
       } else {
-        return Promise.reject(new Error(result.data.message))
+        return Promise.reject(new Error(result.message))
       }
     },
-    userLogout() {
-      this.token = ''
-      this.username = ''
-      this.avatar = ''
-      REMOVE_TOKEN()
+    async userLogout() {
+      let result = await reqLogout()
+      if(result.code === 200) {
+        this.token = ''
+        this.username = ''
+        this.avatar = ''
+        REMOVE_TOKEN()
+        return 'OK'
+      } else {
+        return Promise.reject(new Error(result.message))
+      }
+      
     },
   },
   getters: {},
