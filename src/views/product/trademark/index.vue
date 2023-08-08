@@ -6,7 +6,12 @@
     </el-button>
     <!-- 表格组件 -->
     <el-table style="margin: 10px 0" border :data="trademarkArr">
-      <el-table-column type="index" label="序号" width="80px" align="center"></el-table-column>
+      <el-table-column
+        type="index"
+        label="序号"
+        width="80px"
+        align="center"
+      ></el-table-column>
       <el-table-column label="品牌名称">
         <template #="{ row, $index }">
           <pre style="color: brown">{{ row.tmName }}</pre>
@@ -19,23 +24,48 @@
       </el-table-column>
       <el-table-column label="品牌操作">
         <template #="{ row, $index }">
-          <el-button type="primary" size="small" @click="" icon="Edit"></el-button>
-          <el-button type="primary" size="small" @click="" icon="Delete"></el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click=""
+            icon="Edit"
+          ></el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click=""
+            icon="Delete"
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @current-change="getHasTrademark" @size-change="sizeChange" v-model:current-page="pageNo"
-      v-model:page-size="pageSize" :page-sizes="[1, 5, 10, 20, 50]" :background="background"
-      layout="prev, pager, next, jumper, -> , sizes, total" :total="total" />
+    <el-pagination
+      @current-change="getHasTrademark"
+      @size-change="sizeChange"
+      v-model:current-page="pageNo"
+      v-model:page-size="pageSize"
+      :page-sizes="[1, 5, 10, 20, 50]"
+      :background="background"
+      layout="prev, pager, next, jumper, -> , sizes, total"
+      :total="total"
+    />
   </el-card>
   <el-dialog v-model="dialogFormVisible" title="添加品牌">
-    <el-form style="width: 80%;">
+    <el-form style="width: 80%">
       <el-form-item label="品牌名称" label-width="80px">
-        <el-input placeholder="请输入品牌名称" v-model="trademarkParams.tmName"></el-input>
+        <el-input
+          placeholder="请输入品牌名称"
+          v-model="trademarkParams.tmName"
+        ></el-input>
       </el-form-item>
       <el-form-item label="品牌LOGO" label-width="80px">
-        <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-          :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+        <el-upload
+          class="avatar-uploader"
+          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
             <Plus />
@@ -56,7 +86,7 @@ import { ref, onMounted, reactive } from 'vue'
 import type {
   Records,
   TradeMarkResponseData,
-  TradeMark
+  TradeMark,
 } from '@/api/product/trademark/type'
 let pageNo = ref<number>(1)
 let pageSize = ref<number>(5)
@@ -65,15 +95,15 @@ let background = ref<boolean>(true)
 let trademarkArr = ref<Records>([])
 let total = ref<number>(0)
 
-let dialogFormVisible = ref<boolean>(false);
+let dialogFormVisible = ref<boolean>(false)
 
 // 收集数据
 let trademarkParams = reactive<TradeMark>({
   tmName: '',
-  logoUrl: ''
+  logoUrl: '',
 })
 const getHasTrademark = async (pager = 1) => {
-  pageNo.value = pager;
+  pageNo.value = pager
   let result: TradeMarkResponseData = await reqHasTrademark(
     pageNo.value,
     pageSize.value,
@@ -87,20 +117,19 @@ onMounted(() => {
   getHasTrademark()
 })
 
-
 const sizeChange = () => {
-  getHasTrademark();
+  getHasTrademark()
 }
 
 const addTrademark = () => {
   dialogFormVisible.value = true
 }
 const cancel = () => {
-  dialogFormVisible.value = false;
+  dialogFormVisible.value = false
 }
 
 const confirm = () => {
-  dialogFormVisible.value = false;
+  dialogFormVisible.value = false
 }
 </script>
 
