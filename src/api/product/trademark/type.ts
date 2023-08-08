@@ -6,7 +6,7 @@ export interface ResponseData {
 
 export interface TradeMark {
   id?: number
-  tnName: string
+  tmName: string
   logoUrl: string
 }
 
