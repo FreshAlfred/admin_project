@@ -6,12 +6,7 @@
     </el-button>
     <!-- 表格组件 -->
     <el-table style="margin: 10px 0" border :data="trademarkArr">
-      <el-table-column
-        type="index"
-        label="序号"
-        width="80px"
-        align="center"
-      ></el-table-column>
+      <el-table-column type="index" label="序号" width="80px" align="center"></el-table-column>
       <el-table-column label="品牌名称">
         <template #="{ row, $index }">
           <pre style="color: brown">{{ row.tmName }}</pre>
@@ -24,49 +19,24 @@
       </el-table-column>
       <el-table-column label="品牌操作">
         <template #="{ row, $index }">
-          <el-button
-            type="primary"
-            size="small"
-            @click=""
-            icon="Edit"
-          ></el-button>
-          <el-button
-            type="primary"
-            size="small"
-            @click=""
-            icon="Delete"
-          ></el-button>
+          <el-button type="primary" size="small" @click="updateTrademark(row)" icon="Edit"></el-button>
+          <el-button type="primary" size="small" @click="" icon="Delete"></el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      @current-change="getHasTrademark"
-      @size-change="sizeChange"
-      v-model:current-page="pageNo"
-      v-model:page-size="pageSize"
-      :page-sizes="[1, 5, 10, 20, 50]"
-      :background="background"
-      layout="prev, pager, next, jumper, -> , sizes, total"
-      :total="total"
-    />
+    <el-pagination @current-change="getHasTrademark" @size-change="sizeChange" v-model:current-page="pageNo"
+      v-model:page-size="pageSize" :page-sizes="[1, 5, 10, 20, 50]" :background="background"
+      layout="prev, pager, next, jumper, -> , sizes, total" :total="total" />
   </el-card>
-  <el-dialog v-model="dialogFormVisible" title="添加品牌">
+  <el-dialog v-model="dialogFormVisible" :title="trademarkParams.id? '修改品牌':'添加品牌'">
     <el-form style="width: 80%">
       <el-form-item label="品牌名称" label-width="80px">
-        <el-input
-          placeholder="请输入品牌名称"
-          v-model="trademarkParams.tmName"
-        ></el-input>
+        <el-input placeholder="请输入品牌名称" v-model="trademarkParams.tmName"></el-input>
       </el-form-item>
       <el-form-item label="品牌LOGO" label-width="80px">
-        <el-upload
-          class="avatar-uploader"
-          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+        <el-upload class="avatar-uploader" action="/api/admin/product/fileUpload" :show-file-list="false"
+          :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <img v-if="trademarkParams.logoUrl" :src="trademarkParams.logoUrl" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
             <Plus />
           </el-icon>
@@ -81,8 +51,11 @@
 </template>
 
 <script setup lang="ts">
-import { reqHasTrademark } from '@/api/product/trademark'
+import { reqHasTrademark, reqAddOrUpdateTrademark } from '@/api/product/trademark'
 import { ref, onMounted, reactive } from 'vue'
+import type { UploadProps } from 'element-plus'
+import { ElMessage } from 'element-plus'
+
 import type {
   Records,
   TradeMarkResponseData,
@@ -123,13 +96,56 @@ const sizeChange = () => {
 
 const addTrademark = () => {
   dialogFormVisible.value = true
+  trademarkParams.logoUrl = '';
+  trademarkParams.tmName = '';
+  trademarkParams.id = 0
 }
 const cancel = () => {
   dialogFormVisible.value = false
 }
 
-const confirm = () => {
-  dialogFormVisible.value = false
+const confirm = async () => {
+  let result: any = await reqAddOrUpdateTrademark(trademarkParams)
+  if (result.code == 200) {
+    ElMessage({
+      type: 'success',
+      message: trademarkParams.id? '修改成功':'添加成功'
+    })
+    getHasTrademark(trademarkParams.id? pageNo.value : 1);
+
+  } else {
+    ElMessage({
+      type: 'error',
+      message: '添加失败'
+    })
+  }
+  dialogFormVisible.value = false;
+}
+
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  if (rawFile.type == 'image/jpeg' || rawFile.type == 'image/png' || rawFile.type == 'image/gif') {
+    if (rawFile.size / 1024 / 1024 < 4) {
+      return true
+    } else {
+      ElMessage.error('上传头像图片大小不能超过 4MB!')
+    }
+  } else {
+    ElMessage.error('上传头像图片只能是 JPG/PNG/GIF格式!')
+    return false
+  }
+}
+const handleAvatarSuccess: UploadProps['onSuccess'] = (
+  // response就是返回数据的路径
+  response
+) => {
+  trademarkParams.logoUrl = response.data;
+}
+const updateTrademark = (row: TradeMark) => {
+  dialogFormVisible.value = true
+  // trademarkParams.logoUrl = row.logoUrl;
+  // trademarkParams.tmName = row.tmName;
+  // trademarkParams.id = row.id;
+  Object.assign(trademarkParams, row);
 }
 </script>
 
