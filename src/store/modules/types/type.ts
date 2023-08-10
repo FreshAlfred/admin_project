@@ -8,8 +8,7 @@ export interface UserState {
   avatar: string
 }
 
-
 export interface CategoryState {
-  c1Id: string | number,
+  c1Id: string | number
   c1Arr: CategoryObj[]
 }

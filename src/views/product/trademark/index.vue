@@ -6,7 +6,12 @@
     </el-button>
     <!-- 表格组件 -->
     <el-table style="margin: 10px 0" border :data="trademarkArr">
-      <el-table-column type="index" label="序号" width="80px" align="center"></el-table-column>
+      <el-table-column
+        type="index"
+        label="序号"
+        width="80px"
+        align="center"
+      ></el-table-column>
       <el-table-column label="品牌名称" label-width="100px">
         <template #="{ row, $index }">
           <pre style="color: brown">{{ row.tmName }}</pre>
@@ -19,28 +24,70 @@
       </el-table-column>
       <el-table-column label="品牌操作">
         <template #="{ row, $index }">
-          <el-button type="primary" size="small" @click="updateTrademark(row)" icon="Edit"></el-button>
-          <el-popconfirm @confirm="removeTrademark(row.id)" :title="`确定删除${row.tmName}吗?`" width="250px" icon="Delete">
+          <el-button
+            type="primary"
+            size="small"
+            @click="updateTrademark(row)"
+            icon="Edit"
+          ></el-button>
+          <el-popconfirm
+            @confirm="removeTrademark(row.id)"
+            :title="`确定删除${row.tmName}吗?`"
+            width="250px"
+            icon="Delete"
+          >
             <template #reference>
-              <el-button type="primary" size="small" @click="" icon="Delete"></el-button>
+              <el-button
+                type="primary"
+                size="small"
+                @click=""
+                icon="Delete"
+              ></el-button>
             </template>
           </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @current-change="getHasTrademark" @size-change="sizeChange" v-model:current-page="pageNo"
-      v-model:page-size="pageSize" :page-sizes="[1, 5, 10, 20, 50]" :background="background"
-      layout="prev, pager, next, jumper, -> , sizes, total" :total="total" />
+    <el-pagination
+      @current-change="getHasTrademark"
+      @size-change="sizeChange"
+      v-model:current-page="pageNo"
+      v-model:page-size="pageSize"
+      :page-sizes="[1, 5, 10, 20, 50]"
+      :background="background"
+      layout="prev, pager, next, jumper, -> , sizes, total"
+      :total="total"
+    />
   </el-card>
-  <el-dialog v-model="dialogFormVisible" :title="trademarkParams.id ? '修改品牌' : '添加品牌'">
-    <el-form style="width: 80%" :model="trademarkParams" :rules="rules" ref="formRef">
+  <el-dialog
+    v-model="dialogFormVisible"
+    :title="trademarkParams.id ? '修改品牌' : '添加品牌'"
+  >
+    <el-form
+      style="width: 80%"
+      :model="trademarkParams"
+      :rules="rules"
+      ref="formRef"
+    >
       <el-form-item label="品牌名称" label-width="80px" prop="tmName">
-        <el-input placeholder="请输入品牌名称" v-model="trademarkParams.tmName"></el-input>
+        <el-input
+          placeholder="请输入品牌名称"
+          v-model="trademarkParams.tmName"
+        ></el-input>
       </el-form-item>
       <el-form-item label="品牌LOGO" label-width="80px" prop="logoUrl">
-        <el-upload class="avatar-uploader" action="/api/admin/product/fileUpload" :show-file-list="false"
-          :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="trademarkParams.logoUrl" :src="trademarkParams.logoUrl" class="avatar" />
+        <el-upload
+          class="avatar-uploader"
+          action="/api/admin/product/fileUpload"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img
+            v-if="trademarkParams.logoUrl"
+            :src="trademarkParams.logoUrl"
+            class="avatar"
+          />
           <el-icon v-else class="avatar-uploader-icon">
             <Plus />
           </el-icon>
@@ -58,7 +105,7 @@
 import {
   reqHasTrademark,
   reqAddOrUpdateTrademark,
-  reqDeleteTrademark
+  reqDeleteTrademark,
 } from '@/api/product/trademark'
 import { ref, onMounted, reactive, nextTick } from 'vue'
 import type { UploadProps } from 'element-plus'
@@ -83,7 +130,7 @@ let trademarkParams = reactive<TradeMark>({
   tmName: '',
   logoUrl: '',
 })
-let formRef = ref();
+let formRef = ref()
 const getHasTrademark = async (pager = 1) => {
   pageNo.value = pager
   let result: TradeMarkResponseData = await reqHasTrademark(
@@ -107,7 +154,7 @@ const addTrademark = () => {
   dialogFormVisible.value = true
   trademarkParams.logoUrl = ''
   trademarkParams.tmName = ''
-  trademarkParams.id = 0,
+  ;(trademarkParams.id = 0),
     nextTick(() => {
       formRef.value.clearValidate()
     })
@@ -118,7 +165,7 @@ const cancel = () => {
 
 const confirm = async () => {
   // 表单校验,如果校验通过,则提交
-  await formRef.value.validate();
+  await formRef.value.validate()
   let result: any = await reqAddOrUpdateTrademark(trademarkParams)
   if (result.code == 200) {
     ElMessage({
@@ -166,7 +213,6 @@ const updateTrademark = (row: TradeMark) => {
   // trademarkParams.tmName = row.tmName;
   // trademarkParams.id = row.id;
   Object.assign(trademarkParams, row)
-
 }
 const validatorTmName = (rule: any, value: any, callback: any) => {
   if (value.trim().length >= 2) {
@@ -185,17 +231,12 @@ const validatorLogoUrl = (rule: any, value: any, callback: any) => {
 }
 // 表单校验规则对象
 const rules = {
-  tmName: [
-    { required: true, trigger: 'blur', validator: validatorTmName },
-  ],
-  logoUrl: [
-    { required: true, validator: validatorLogoUrl },
-  ]
+  tmName: [{ required: true, trigger: 'blur', validator: validatorTmName }],
+  logoUrl: [{ required: true, validator: validatorLogoUrl }],
 }
 
-
 const removeTrademark = async (id: number) => {
-  let result = await reqDeleteTrademark(id);
+  let result = await reqDeleteTrademark(id)
   if (result.code == 200) {
     ElMessage({
       type: 'success',
@@ -209,7 +250,6 @@ const removeTrademark = async (id: number) => {
     })
   }
 }
-
 </script>
 
 <style>
