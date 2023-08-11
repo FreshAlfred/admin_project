@@ -8,7 +8,7 @@ let useCategoryStore = defineStore('Category', {
     return {
       c1Arr: [],
       c1Id: '',
-      c2Arr: []
+      c2Arr: [],
     }
   },
   actions: {
@@ -23,7 +23,7 @@ let useCategoryStore = defineStore('Category', {
       if (result.code == 200) {
         this.c2Arr = result.data
       }
-    }
+    },
   },
   getters: {},
 })
