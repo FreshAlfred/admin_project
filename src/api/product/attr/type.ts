@@ -17,19 +17,19 @@ export interface CategoryResponseData extends ResponseData {
 
 //  已有属性值对象
 export interface AttrValue {
-  id?: number,
-  valueName: string,
+  id?: number
+  valueName: string
   attrId?: number
 }
-// 属性值数组对象 
+// 属性值数组对象
 export type AttrValueList = AttrValue[]
 
 // 属性对象
 export interface Attr {
-  id?: number,
-  attrName: string,
-  categoryId: number|string,
-  categoryLevel: number,
+  id?: number
+  attrName: string
+  categoryId: number | string
+  categoryLevel: number
   attrValueList: AttrValueList
 }
 //  属性对象数组

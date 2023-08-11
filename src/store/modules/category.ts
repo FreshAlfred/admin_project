@@ -11,7 +11,7 @@ let useCategoryStore = defineStore('Category', {
       c2Arr: [],
       c2Id: '',
       c3Arr: [],
-      c3Id: ''
+      c3Id: '',
     }
   },
   actions: {

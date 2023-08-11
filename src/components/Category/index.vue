@@ -2,7 +2,11 @@
   <el-card>
     <el-form inline>
       <el-form-item label="一级分类">
-        <el-select :disabled="scene" v-model="categoryStore.c1Id" @change="handler">
+        <el-select
+          :disabled="scene"
+          v-model="categoryStore.c1Id"
+          @change="handler"
+        >
           <el-option
             v-for="(c1, index) in categoryStore.c1Arr"
             :key="c1.id"
@@ -12,7 +16,11 @@
         </el-select>
       </el-form-item>
       <el-form-item label="二级分类">
-        <el-select :disabled="scene" v-model="categoryStore.c2Id" @change="handler2">
+        <el-select
+          :disabled="scene"
+          v-model="categoryStore.c2Id"
+          @change="handler2"
+        >
           <el-option
             v-for="(c2, index) in categoryStore.c2Arr"
             :key="c2.id"
