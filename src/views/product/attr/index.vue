@@ -83,7 +83,8 @@
         <el-table-column label="属性值名称">
           <template #="{ row, $index }">
             <el-input
-            v-if="flag" @blur="toLook"
+              v-if="flag"
+              @blur="toLook"
               placeholder="请输入属性值名称"
               v-model="row.valueName"
             ></el-input>
@@ -113,7 +114,7 @@ let attrParams = reactive<Attr>({
   categoryLevel: 3,
   attrValueList: [],
 })
-let flag = ref<boolean>(true);
+let flag = ref<boolean>(true)
 watch(
   () => categoryStore.c3Id,
   () => {
