@@ -83,9 +83,11 @@
         <el-table-column label="属性值名称">
           <template #="{ row, $index }">
             <el-input
+            v-if="flag" @blur="toLook"
               placeholder="请输入属性值名称"
               v-model="row.valueName"
             ></el-input>
+            <div v-else>{{ row.valueName }}</div>
           </template>
         </el-table-column>
         <el-table-column label="属性值操作"></el-table-column>
@@ -111,6 +113,7 @@ let attrParams = reactive<Attr>({
   categoryLevel: 3,
   attrValueList: [],
 })
+let flag = ref<boolean>(true);
 watch(
   () => categoryStore.c3Id,
   () => {
@@ -166,6 +169,9 @@ const save = async () => {
       message: attrParams.id ? '修改失败' : '添加失败',
     })
   }
+}
+const toLook = () => {
+  flag.value = false
 }
 </script>
 
