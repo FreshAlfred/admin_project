@@ -83,7 +83,7 @@
         <el-table-column label="属性值名称">
           <template #="{ row, $index }">
             <el-input
-            size="small"
+              size="small"
               v-if="row.flag"
               @blur="toLook(row, $index)"
               placeholder="请输入属性值名称"
@@ -94,7 +94,14 @@
         </el-table-column>
         <el-table-column label="属性值操作"></el-table-column>
       </el-table>
-      <el-button type="primary" size="default" @click="save" :disabled="attrParams.attrValueList.length<=0">保存</el-button>
+      <el-button
+        type="primary"
+        size="default"
+        @click="save"
+        :disabled="attrParams.attrValueList.length <= 0"
+      >
+        保存
+      </el-button>
       <el-button type="primary" size="default" @click="cancel">取消</el-button>
     </div>
   </el-card>
@@ -154,7 +161,7 @@ const cancel = () => {
 const addAttrValue = () => {
   attrParams.attrValueList.push({
     valueName: '',
-    flag: true
+    flag: true,
   })
 }
 const save = async () => {
@@ -174,21 +181,20 @@ const save = async () => {
   }
 }
 const toLook = (row: AttrValue, $index: number) => {
-  if(row.valueName.trim() === '') {
+  if (row.valueName.trim() === '') {
     attrParams.attrValueList.splice($index, 1)
     ElMessage({
       type: 'error',
       message: '属性值不能为空',
     })
-    return;
+    return
   }
-  let repeat = attrParams.attrValueList.find(item => 
-  {
-    if(item !== row) {
+  let repeat = attrParams.attrValueList.find((item) => {
+    if (item !== row) {
       return item.valueName === row.valueName
     }
   })
-  if(repeat) {
+  if (repeat) {
     attrParams.attrValueList.splice($index, 1)
     ElMessage({
       type: 'error',
@@ -196,7 +202,7 @@ const toLook = (row: AttrValue, $index: number) => {
     })
     return
   }
-  row.flag = false;
+  row.flag = false
 }
 
 const toEdit = (row: AttrValue) => {
