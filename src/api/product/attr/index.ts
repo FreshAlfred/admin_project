@@ -7,7 +7,7 @@ enum API {
   // 获取分类下的属性。
   ATTR_URL = '/admin/product/attrInfoList/',
   ADDORUPDATEATTR_URL = '/admin/product/saveAttrInfo',
-  DELETEATTR_URL = '/admin/product/deleteAttr/'
+  DELETEATTR_URL = '/admin/product/deleteAttr/',
 }
 
 export const reqC1 = () => request.get<any, CategoryResponseData>(API.C1_URL)
@@ -29,5 +29,5 @@ export const reqAttr = (
 export const reqAddOrUpdateAttr = (data: Attr) =>
   request.post<any, any>(API.ADDORUPDATEATTR_URL, data)
 
-
-export const reqRemoveAttr = (attrId: number) => request.delete<any, any>(API.DELETEATTR_URL + attrId)
+export const reqRemoveAttr = (attrId: number) =>
+  request.delete<any, any>(API.DELETEATTR_URL + attrId)
