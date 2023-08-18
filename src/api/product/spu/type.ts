@@ -9,9 +9,9 @@ export interface SpuData {
   spuName: string
   description: string
   category3Id: number | string
-  tmId: number
-  spuSaleAttrList: null
-  spuImgList: null
+  tmId: number | string // 品牌id
+  spuSaleAttrList: null | SpuSaleAttr[]
+  spuImgList: null | SpuImage[]
 }
 
 export type Records = SpuData[]
@@ -38,12 +38,14 @@ export interface AllTrademark extends ResponseData {
 
 // 图片
 export interface SpuImage {
-  id: number
-  spuId: number
-  imgName: string
-  imgUrl: string
-  createTime: string
-  updateTime: string
+  id?: number
+  spuId?: number
+  imgName?: string
+  imgUrl?: string
+  createTime?: string
+  updateTime?: string,
+  name?: string,
+  url?: string
 }
 
 export interface SpuHasImg extends ResponseData {
@@ -54,22 +56,22 @@ export interface SpuHasImg extends ResponseData {
 
 export interface SaleAttrValue {
   id?: number
-  createTime: null
-  updateTime: null
-  spuId: number
+  createTime?: null
+  updateTime?: null
+  spuId?: number
   baseSaleAttrId: number
   saleAttrName: string
-  saleAttrValueName: string
-  isChecked: null
+  saleAttrValueName?: string
+  isChecked?: null
 }
 
 export type spuSaleAttrValueList = SaleAttrValue[]
 
 export interface SpuSaleAttr {
   id?: number
-  createTime: null
-  updateTime: null
-  spuId: number
+  createTime?: null
+  updateTime?: null
+  spuId?: number
   baseSaleAttrId: number
   saleAttrName: string
   spuSaleAttrValueList: spuSaleAttrValueList

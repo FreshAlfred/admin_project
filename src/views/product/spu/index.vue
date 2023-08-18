@@ -39,7 +39,7 @@
             <el-button
               type="primary"
               size="small"
-              @click="changeSpu"
+              @click="changeSpu(row)"
               icon="Edit"
               title="修改SPU"
             ></el-button>
@@ -72,7 +72,7 @@
         :total="total"
       />
     </div>
-    <SpuForm v-show="scene === 1" @changeScene="changeScene"></SpuForm>
+    <SpuForm ref="spuForm" v-show="scene === 1" @changeScene="changeScene"></SpuForm>
     <SkuForm v-show="scene === 2"></SkuForm>
   </el-card>
 </template>
@@ -81,16 +81,19 @@
 import { ref, watch } from 'vue'
 import useCategoryStore from '@/store/modules/category'
 import type { HasSpuResponseData, Records } from '@/api/product/spu/type'
+import type { SpuData } from '@/api/product/spu/type'
 import { reqHasSpu } from '@/api/product/spu'
 import SpuForm from './spuForm.vue'
 import SkuForm from './skuForm.vue'
 let categoryStore = useCategoryStore()
-let scene = ref<number>(1)
+let scene = ref<number>(0)
 // 分页器
 let pageNo = ref<number>(1)
 let pageSize = ref<number>(3)
 let records = ref<Records>([])
 let total = ref<number>(0)
+// 获取子组件实例
+let spuForm = ref<any>()
 // 监听三级ID变化
 watch(
   () => categoryStore.c3Id,
@@ -122,8 +125,10 @@ const changeSize = () => {
 const addSpu = () => {
   scene.value = 1
 }
-const changeSpu = () => {
+const changeSpu = (row: SpuData) => {
   scene.value = 1
+  // 调用子组件的实例方法获取完整的数据
+  spuForm.value.initHasSpuData(row);
 }
 const changeScene = (num: number) => {
   scene.value = num
