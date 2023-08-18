@@ -43,8 +43,8 @@ export interface SpuImage {
   imgName?: string
   imgUrl?: string
   createTime?: string
-  updateTime?: string,
-  name?: string,
+  updateTime?: string
+  name?: string
   url?: string
 }
 

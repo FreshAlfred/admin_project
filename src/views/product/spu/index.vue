@@ -72,7 +72,11 @@
         :total="total"
       />
     </div>
-    <SpuForm ref="spuForm" v-show="scene === 1" @changeScene="changeScene"></SpuForm>
+    <SpuForm
+      ref="spuForm"
+      v-show="scene === 1"
+      @changeScene="changeScene"
+    ></SpuForm>
     <SkuForm v-show="scene === 2"></SkuForm>
   </el-card>
 </template>
@@ -128,7 +132,7 @@ const addSpu = () => {
 const changeSpu = (row: SpuData) => {
   scene.value = 1
   // 调用子组件的实例方法获取完整的数据
-  spuForm.value.initHasSpuData(row);
+  spuForm.value.initHasSpuData(row)
 }
 const changeScene = (num: number) => {
   scene.value = num
