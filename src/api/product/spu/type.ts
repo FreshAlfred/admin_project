@@ -59,8 +59,8 @@ export interface SaleAttrValue {
   createTime?: null
   updateTime?: null
   spuId?: number
-  baseSaleAttrId: number
-  saleAttrName: string
+  baseSaleAttrId: number | string
+  saleAttrName?: string
   saleAttrValueName?: string
   isChecked?: null
 }
@@ -72,9 +72,11 @@ export interface SpuSaleAttr {
   createTime?: null
   updateTime?: null
   spuId?: number
-  baseSaleAttrId: number
+  baseSaleAttrId: number | string
   saleAttrName: string
-  spuSaleAttrValueList: spuSaleAttrValueList
+  spuSaleAttrValueList: spuSaleAttrValueList,
+  flag?: boolean,
+  saleAttrValue?: string
 }
 
 export interface SaleAttrResponseData extends ResponseData {
