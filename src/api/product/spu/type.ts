@@ -74,8 +74,8 @@ export interface SpuSaleAttr {
   spuId?: number
   baseSaleAttrId: number | string
   saleAttrName: string
-  spuSaleAttrValueList: spuSaleAttrValueList,
-  flag?: boolean,
+  spuSaleAttrValueList: spuSaleAttrValueList
+  flag?: boolean
   saleAttrValue?: string
 }
 
