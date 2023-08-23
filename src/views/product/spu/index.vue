@@ -136,6 +136,7 @@ const changeSpu = (row: SpuData) => {
 }
 const changeScene = (num: number) => {
   scene.value = num
+  getHasSpu()
 }
 </script>
 

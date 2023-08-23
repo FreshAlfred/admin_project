@@ -11,7 +11,7 @@ export interface SpuData {
   category3Id: number | string
   tmId: number | string // 品牌id
   spuSaleAttrList: null | SpuSaleAttr[]
-  spuImgList: null | SpuImage[]
+  spuImageList: null | SpuImage[]
 }
 
 export type Records = SpuData[]
