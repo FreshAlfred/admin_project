@@ -126,7 +126,14 @@
         </el-table-column>
       </el-table>
       <el-form-item>
-        <el-button type="primary" size="default" :disabled="saleAttr.length>0?false:true" @click="save">保存</el-button>
+        <el-button
+          type="primary"
+          size="default"
+          :disabled="saleAttr.length > 0 ? false : true"
+          @click="save"
+        >
+          保存
+        </el-button>
         <el-button type="primary" size="default" @click="cancel">
           取消
         </el-button>
@@ -142,7 +149,7 @@ import {
   reqSpuImageList,
   reqSpuHasSaleAttr,
   reqAllSaleAttr,
-  reqAddOrUpdateSpu
+  reqAddOrUpdateSpu,
 } from '@/api/product/spu'
 import type {
   HasSaleAttr,
@@ -276,18 +283,18 @@ const save = async () => {
       imgUrl: (item.response && item.response.data) || item.url,
     }
   })
-  SpuParams.value.spuSaleAttrList = saleAttr.value;
+  SpuParams.value.spuSaleAttrList = saleAttr.value
   let result = await reqAddOrUpdateSpu(SpuParams.value)
   if (result.code == 200) {
     ElMessage({
       type: 'success',
-      message: SpuParams.value.id?'更新成功':'添加成功',
+      message: SpuParams.value.id ? '更新成功' : '添加成功',
     })
     $emit('changeScene', 0)
   } else {
     ElMessage({
       type: 'error',
-      message: SpuParams.value.id?'更新失败':'添加失败',
+      message: SpuParams.value.id ? '更新失败' : '添加失败',
     })
   }
 }
