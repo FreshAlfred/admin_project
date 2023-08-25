@@ -32,7 +32,7 @@
             <el-button
               type="primary"
               size="small"
-              @click=""
+              @click="addSku"
               icon="Plus"
               title="添加SKU"
             ></el-button>
@@ -77,7 +77,7 @@
       v-show="scene === 1"
       @changeScene="changeScene"
     ></SpuForm>
-    <SkuForm v-show="scene === 2"></SkuForm>
+    <SkuForm v-show="scene === 2" @changeScene="changeScene"></SkuForm>
   </el-card>
 </template>
 
@@ -142,6 +142,11 @@ const changeScene = (obj: any) => {
   } else {
     getHasSpu(pageNo.value)
   }
+}
+
+// 添加SKU的回调函数
+const addSku = () => {
+  scene.value = 2;
 }
 </script>
 
