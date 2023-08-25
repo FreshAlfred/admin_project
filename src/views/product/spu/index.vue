@@ -137,7 +137,7 @@ const changeSpu = (row: SpuData) => {
 }
 const changeScene = (obj: any) => {
   scene.value = obj.flag
-  if(obj.params==='add'){
+  if (obj.params === 'add') {
     getHasSpu()
   } else {
     getHasSpu(pageNo.value)
