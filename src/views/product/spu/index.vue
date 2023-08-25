@@ -128,15 +128,20 @@ const changeSize = () => {
 }
 const addSpu = () => {
   scene.value = 1
+  spuForm.value.initAddSpu(categoryStore.c3Id)
 }
 const changeSpu = (row: SpuData) => {
   scene.value = 1
   // 调用子组件的实例方法获取完整的数据
   spuForm.value.initHasSpuData(row)
 }
-const changeScene = (num: number) => {
-  scene.value = num
-  getHasSpu()
+const changeScene = (obj: any) => {
+  scene.value = obj.flag
+  if(obj.params==='add'){
+    getHasSpu()
+  } else {
+    getHasSpu(pageNo.value)
+  }
 }
 </script>
 
