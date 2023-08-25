@@ -146,7 +146,7 @@ const changeScene = (obj: any) => {
 
 // 添加SKU的回调函数
 const addSku = () => {
-  scene.value = 2;
+  scene.value = 2
 }
 </script>
 

@@ -52,7 +52,11 @@
     </el-form-item>
     <el-form-item label="图片名称">
       <el-table border>
-        <el-table-column type="selection" width="80px" align="center"></el-table-column>
+        <el-table-column
+          type="selection"
+          width="80px"
+          align="center"
+        ></el-table-column>
         <el-table-column label="图片"></el-table-column>
         <el-table-column label="名称"></el-table-column>
         <el-table-column label="操作"></el-table-column>
