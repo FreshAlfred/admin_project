@@ -32,7 +32,7 @@
             <el-button
               type="primary"
               size="small"
-              @click="addSku"
+              @click="addSku(row)"
               icon="Plus"
               title="添加SKU"
             ></el-button>
@@ -77,7 +77,7 @@
       v-show="scene === 1"
       @changeScene="changeScene"
     ></SpuForm>
-    <SkuForm v-show="scene === 2" @changeScene="changeScene"></SkuForm>
+    <SkuForm  ref="sku" v-show="scene === 2" @changeScene="changeScene"></SkuForm>
   </el-card>
 </template>
 
@@ -98,6 +98,7 @@ let records = ref<Records>([])
 let total = ref<number>(0)
 // 获取子组件实例
 let spuForm = ref<any>()
+let sku = ref<any>()
 // 监听三级ID变化
 watch(
   () => categoryStore.c3Id,
@@ -145,8 +146,9 @@ const changeScene = (obj: any) => {
 }
 
 // 添加SKU的回调函数
-const addSku = () => {
+const addSku = (row: SpuData) => {
   scene.value = 2
+  sku.value.initSkuData(categoryStore.c1Id, categoryStore.c2Id, row)
 }
 </script>
 

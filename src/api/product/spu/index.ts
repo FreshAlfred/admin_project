@@ -5,6 +5,7 @@ import type {
   AllTrademark,
   SpuHasImg,
   SaleAttrResponseData,
+  SkuData
 } from './type'
 enum API {
   HASSPU_URL = '/admin/product/',
@@ -15,6 +16,8 @@ enum API {
   // 追加和修改SPU
   ADDSPU_URL = '/admin/product/saveSpuInfo',
   UPDATESPU_URL = '/admin/product/updateSpuInfo',
+  // 追加新增SKU
+  ADDSKU_URL = '/admin/product/saveSkuInfo',
 }
 
 export const reqHasSpu = (
@@ -45,3 +48,4 @@ export const reqAddOrUpdateSpu = (data: any) => {
     return request.post<any, any>(API.ADDSPU_URL, data)
   }
 }
+export const reqAddSku = (data: SkuData) => request.post<any, any>(API.ADDSKU_URL, data)

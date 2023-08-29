@@ -91,3 +91,26 @@ export interface HasSaleAttr {
 export interface HasSaleAttrResponseData extends ResponseData {
   data: HasSaleAttr[]
 }
+
+export interface SkuData {
+  category3Id: number | string,
+  spuId: number | string,
+  tmId: number | string,
+  skuName: string,
+  price: number | string,
+  weight: number | string,
+  skuDesc: string,
+  skuAttrValueList: [
+    {
+      attrId: number | string,
+      valueId: number | string
+    }
+  ],
+  skuSaleAttrValueList: [
+    {
+      saleAttrId: number | string,
+      saleAttrValueId: number | string
+    }
+  ],
+  skuDefaultImg: string
+}
