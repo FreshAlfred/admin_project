@@ -5,7 +5,7 @@ import type {
   AllTrademark,
   SpuHasImg,
   SaleAttrResponseData,
-  SkuData
+  SkuData,
 } from './type'
 enum API {
   HASSPU_URL = '/admin/product/',
@@ -48,4 +48,5 @@ export const reqAddOrUpdateSpu = (data: any) => {
     return request.post<any, any>(API.ADDSPU_URL, data)
   }
 }
-export const reqAddSku = (data: SkuData) => request.post<any, any>(API.ADDSKU_URL, data)
+export const reqAddSku = (data: SkuData) =>
+  request.post<any, any>(API.ADDSKU_URL, data)

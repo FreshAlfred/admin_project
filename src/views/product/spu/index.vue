@@ -77,7 +77,11 @@
       v-show="scene === 1"
       @changeScene="changeScene"
     ></SpuForm>
-    <SkuForm  ref="sku" v-show="scene === 2" @changeScene="changeScene"></SkuForm>
+    <SkuForm
+      ref="sku"
+      v-show="scene === 2"
+      @changeScene="changeScene"
+    ></SkuForm>
   </el-card>
 </template>
 

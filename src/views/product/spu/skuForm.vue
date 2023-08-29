@@ -14,18 +14,34 @@
     </el-form-item>
     <el-form-item label="平台属性">
       <el-form :inline="true">
-        <el-form-item v-for="(item, index) in attrArr" :key="item.id" :label="item.attrName">
+        <el-form-item
+          v-for="(item, index) in attrArr"
+          :key="item.id"
+          :label="item.attrName"
+        >
           <el-select>
-            <el-option v-for="(item1, index1) in item.attrValueList" :key="item1.id" :label="item1.valueName"></el-option>
+            <el-option
+              v-for="(item1, index1) in item.attrValueList"
+              :key="item1.id"
+              :label="item1.valueName"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
     </el-form-item>
     <el-form-item label="销售属性">
       <el-form :inline="true">
-        <el-form-item v-for="(item, index) in saleArr" :key="item.id" :label="item.saleAttrName">
+        <el-form-item
+          v-for="(item, index) in saleArr"
+          :key="item.id"
+          :label="item.saleAttrName"
+        >
           <el-select>
-            <el-option v-for="(item1, index1) in item.spuSaleAttrValueList" :key="item1.id" :label="item1.saleAttrValueName"></el-option>
+            <el-option
+              v-for="(item1, index1) in item.spuSaleAttrValueList"
+              :key="item1.id"
+              :label="item1.saleAttrValueName"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -38,15 +54,16 @@
           align="center"
         ></el-table-column>
         <el-table-column label="图片">
-          <template #="{row, index}">
-            <img :src="row.imgUrl" alt="" style="width: 100px; height: 100px">
+          <template #="{ row, index }">
+            <img :src="row.imgUrl" alt="" style="width: 100px; height: 100px" />
           </template>
         </el-table-column>
         <el-table-column label="名称" prop="imgName"></el-table-column>
         <el-table-column label="操作">
-          <template #="{row, index}">
-            <el-button type="primary" size="small" @click="">设置默认</el-button>
-            
+          <template #="{ row, index }">
+            <el-button type="primary" size="small" @click="">
+              设置默认
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,9 +77,9 @@
 
 <script setup lang="ts">
 // 引入添加sku请求的api
-import { reqAttr } from '@/api/product/attr';
-import { reqSpuImageList, reqSpuHasSaleAttr } from '@/api/product/spu';
-import { ref } from 'vue';
+import { reqAttr } from '@/api/product/attr'
+import { reqSpuImageList, reqSpuHasSaleAttr } from '@/api/product/spu'
+import { ref } from 'vue'
 let attrArr = ref<any>([])
 let imgArr = ref<any>([])
 let saleArr = ref<any>([])
@@ -72,7 +89,11 @@ const cancel = () => {
   $emit('changeScene', { flag: 0, params: 'update' })
 }
 
-const initSkuData = async (c1Id: number|string, c2Id: number|string, spu: any) => {
+const initSkuData = async (
+  c1Id: number | string,
+  c2Id: number | string,
+  spu: any,
+) => {
   // 获取平台属性
   let result: any = await reqAttr(c1Id, c2Id, spu.category3Id)
   let result1: any = await reqSpuHasSaleAttr(spu.id)
@@ -83,7 +104,7 @@ const initSkuData = async (c1Id: number|string, c2Id: number|string, spu: any) =
 }
 
 defineExpose({
-  initSkuData
+  initSkuData,
 })
 </script>
 
