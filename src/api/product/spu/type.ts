@@ -92,6 +92,14 @@ export interface HasSaleAttrResponseData extends ResponseData {
   data: HasSaleAttr[]
 }
 
+export interface Attr {
+  attrId: number | string
+  valueId: number | string
+}
+export interface saleAttr {
+  saleAttrId: number | string
+  saleAttrValueId: number | string
+}
 export interface SkuData {
   category3Id: number | string
   spuId: number | string
@@ -100,17 +108,11 @@ export interface SkuData {
   price: number | string
   weight: number | string
   skuDesc: string
-  skuAttrValueList: [
-    {
-      attrId: number | string
-      valueId: number | string
-    },
-  ]
-  skuSaleAttrValueList: [
-    {
-      saleAttrId: number | string
-      saleAttrValueId: number | string
-    },
-  ]
+  skuAttrValueList?: Attr[],
+  skuSaleAttrValueList?: saleAttr[],
   skuDefaultImg: string
+}
+
+export interface SkuInfoData extends ResponseData {
+  data: SkuData[]
 }
