@@ -108,8 +108,8 @@ export interface SkuData {
   price: number | string
   weight: number | string
   skuDesc: string
-  skuAttrValueList?: Attr[],
-  skuSaleAttrValueList?: saleAttr[],
+  skuAttrValueList?: Attr[]
+  skuSaleAttrValueList?: saleAttr[]
   skuDefaultImg: string
 }
 

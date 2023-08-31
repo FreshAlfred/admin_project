@@ -4,36 +4,69 @@
       <el-input placeholder="SKU名称" v-model="SkuParams.skuName"></el-input>
     </el-form-item>
     <el-form-item label="价格(元)">
-      <el-input placeholder="价格(元)" type="number" v-model="SkuParams.price"></el-input>
+      <el-input
+        placeholder="价格(元)"
+        type="number"
+        v-model="SkuParams.price"
+      ></el-input>
     </el-form-item>
     <el-form-item label="重量(g)">
-      <el-input placeholder="重量(g)" type="number" v-model="SkuParams.weight"></el-input>
+      <el-input
+        placeholder="重量(g)"
+        type="number"
+        v-model="SkuParams.weight"
+      ></el-input>
     </el-form-item>
     <el-form-item label="SKU描述">
-      <el-input placeholder="SKU描述" type="textarea" v-model="SkuParams.skuDesc"></el-input>
+      <el-input
+        placeholder="SKU描述"
+        type="textarea"
+        v-model="SkuParams.skuDesc"
+      ></el-input>
     </el-form-item>
     <el-form-item label="平台属性">
       <el-form :inline="true">
-        <el-form-item v-for="(item, index) in attrArr" :key="item.id" :label="item.attrName">
+        <el-form-item
+          v-for="(item, index) in attrArr"
+          :key="item.id"
+          :label="item.attrName"
+        >
           <el-select v-model="item.attrIdAndValueId">
-            <el-option :value="`${item.id}:${item1.id}`" v-for="(item1, index1) in item.attrValueList" :key="item1.id" :label="item1.valueName"></el-option>
+            <el-option
+              :value="`${item.id}:${item1.id}`"
+              v-for="(item1, index1) in item.attrValueList"
+              :key="item1.id"
+              :label="item1.valueName"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
     </el-form-item>
     <el-form-item label="销售属性">
       <el-form :inline="true">
-        <el-form-item v-for="(item, index) in saleArr" :key="item.id" :label="item.saleAttrName">
+        <el-form-item
+          v-for="(item, index) in saleArr"
+          :key="item.id"
+          :label="item.saleAttrName"
+        >
           <el-select v-model="item.saleIdAndValueId">
-            <el-option :value="`${item.id}:${item1.id}`" v-for="(item1, index1) in item.spuSaleAttrValueList" :key="item1.id"
-              :label="item1.saleAttrValueName"></el-option>
+            <el-option
+              :value="`${item.id}:${item1.id}`"
+              v-for="(item1, index1) in item.spuSaleAttrValueList"
+              :key="item1.id"
+              :label="item1.saleAttrValueName"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
     </el-form-item>
     <el-form-item label="图片名称">
       <el-table border :data="imgArr" ref="table">
-        <el-table-column type="selection" width="80px" align="center"></el-table-column>
+        <el-table-column
+          type="selection"
+          width="80px"
+          align="center"
+        ></el-table-column>
         <el-table-column label="图片">
           <template #="{ row, index }">
             <img :src="row.imgUrl" alt="" style="width: 100px; height: 100px" />
@@ -59,9 +92,13 @@
 <script setup lang="ts">
 // 引入添加sku请求的api
 import { reqAttr } from '@/api/product/attr'
-import { reqSpuImageList, reqSpuHasSaleAttr, reqAddSku } from '@/api/product/spu'
-import type { SkuData } from '@/api/product/spu/type';
-import { ElMessage } from 'element-plus';
+import {
+  reqSpuImageList,
+  reqSpuHasSaleAttr,
+  reqAddSku,
+} from '@/api/product/spu'
+import type { SkuData } from '@/api/product/spu/type'
+import { ElMessage } from 'element-plus'
 import { ref, reactive } from 'vue'
 let attrArr = ref<any>([])
 let imgArr = ref<any>([])
@@ -89,7 +126,7 @@ let SkuParams = reactive<SkuData>({
     //   saleAttrValueId: '',
     // }
   ],
-  skuDefaultImg: ''
+  skuDefaultImg: '',
 })
 // 获取table组件的vc
 let table = ref<any>()
@@ -103,7 +140,7 @@ const initSkuData = async (
   spu: any,
 ) => {
   // 收集数据
-  SkuParams.category3Id = spu.category3Id;
+  SkuParams.category3Id = spu.category3Id
   SkuParams.spuId = spu.id
   SkuParams.tmId = spu.tmId
 
@@ -131,24 +168,26 @@ const handler = (row: any) => {
 const save = async () => {
   // 整理参数
   let attrArrs = attrArr.value.reduce((prev: any, next: any) => {
-    if(next.attrIdAndValueId) {
-      let [attrId, valueId] = next.attrIdAndValueId.split(':');
-      prev.push({ attrId, valueId });
+    if (next.attrIdAndValueId) {
+      let [attrId, valueId] = next.attrIdAndValueId.split(':')
+      prev.push({ attrId, valueId })
     }
-    return prev;
+    return prev
   }, [])
-  SkuParams.skuAttrValueList = attrArrs;
-  SkuParams.skuSaleAttrValueList = saleArr.value.reduce((prev: any, next: any) => {
-    if(next.saleIdAndValueId) {
-      let [saleAttrId, saleAttrValueId] = next.saleIdAndValueId.split(':');
-      prev.push({ saleAttrId, saleAttrValueId });
-      
-    }
-    return prev;
-  }, [])
+  SkuParams.skuAttrValueList = attrArrs
+  SkuParams.skuSaleAttrValueList = saleArr.value.reduce(
+    (prev: any, next: any) => {
+      if (next.saleIdAndValueId) {
+        let [saleAttrId, saleAttrValueId] = next.saleIdAndValueId.split(':')
+        prev.push({ saleAttrId, saleAttrValueId })
+      }
+      return prev
+    },
+    [],
+  )
   // 发请求
   let result: any = await reqAddSku(SkuParams)
-  if(result.code == 200) {
+  if (result.code == 200) {
     ElMessage({ type: 'success', message: '添加SKU成功' })
     //切换场景
     $emit('changeScene', { flag: 0, params: '' })
