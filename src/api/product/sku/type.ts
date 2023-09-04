@@ -6,15 +6,15 @@ export interface ResponseData {
 
 export interface Attr {
   attrId: number | string
-  valueId: number | string,
-  attrName?: string,
+  valueId: number | string
+  attrName?: string
   id?: number
 }
 export interface saleAttr {
   saleAttrId: number | string
-  saleAttrValueId: number | string,
-  id?: number,
-  saleAttrValueName?: string,
+  saleAttrValueId: number | string
+  id?: number
+  saleAttrValueName?: string
 }
 export interface SkuData {
   category3Id?: number | string
@@ -26,14 +26,16 @@ export interface SkuData {
   skuDesc?: string
   skuAttrValueList?: Attr[]
   skuSaleAttrValueList?: saleAttr[]
-  skuDefaultImg?: string,
-  isSale?: number,
-  id?: number,
-  skuImageList?: [{
-    id?: number,
-    skuId?: number,
-    imgUrl?: string
-  }]
+  skuDefaultImg?: string
+  isSale?: number
+  id?: number
+  skuImageList?: [
+    {
+      id?: number
+      skuId?: number
+      imgUrl?: string
+    },
+  ]
 }
 
 export interface SkuResponseData extends ResponseData {
