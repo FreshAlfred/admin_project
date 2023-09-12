@@ -6,13 +6,13 @@ export interface ResponseData {
 
 export interface User {
   id?: number
-  createTime: string
-  updateTime: string
+  createTime?: string
+  updateTime?: string
   username?: string
   password?: string
-  phone: string
-  name: string
-  roleName: string
+  phone?: string
+  name?: string
+  roleName?: string
 }
 
 export type Records = User[]
@@ -25,4 +25,27 @@ export interface UserResponseData extends ResponseData {
     current: number
     pages: number
   }
+}
+
+
+export interface RoleData {
+  id?: number,
+  createTime?: string,
+  updateTime?: string,
+  roleName: string,
+  remark: string
+}
+
+export type AllRole = RoleData[]
+
+export interface RoleResponseData extends ResponseData {
+  data: {
+    assignRoles: AllRole,
+    allRolesList: AllRole
+  }
+}
+
+export interface SetRoleData {
+  userId: number,
+  roleIdList: number[]
 }
