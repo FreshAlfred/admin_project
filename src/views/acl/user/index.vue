@@ -2,11 +2,18 @@
   <el-card style="height: 80px">
     <el-form :inline="true" class="form">
       <el-form-item label="用户名">
-        <el-input placeholder="请输入搜索的用户"></el-input>
+        <el-input placeholder="请输入搜索的用户" v-model="keyword"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="default" @click="">搜索</el-button>
-        <el-button type="primary" size="default" @click="">重置</el-button>
+        <el-button
+          type="primary"
+          size="default"
+          @click="search"
+          :disabled="!keyword"
+        >
+          搜索
+        </el-button>
+        <el-button type="primary" size="default" @click="reset">重置</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -14,8 +21,19 @@
     <el-button type="primary" size="default" @click="addUser">
       添加用户
     </el-button>
-    <el-button type="primary" size="default" @click="">批量删除</el-button>
-    <el-table style="margin: 10px 0" :data="userArr">
+    <el-button
+      type="primary"
+      size="default"
+      @click="deleteSelectUser"
+      :disabled="!selectIdArr.length"
+    >
+      批量删除
+    </el-button>
+    <el-table
+      style="margin: 10px 0"
+      :data="userArr"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column align="center" type="selection"></el-table-column>
       <el-table-column align="center" label="#" type="index"></el-table-column>
       <el-table-column align="center" prop="id" label="id"></el-table-column>
@@ -67,7 +85,11 @@
           >
             编辑
           </el-button>
-          <el-popconfirm :title="`你确定要删除${row.username}吗`" width="260px" @confirm="deleteUser(row.id)">
+          <el-popconfirm
+            :title="`你确定要删除${row.username}吗`"
+            width="260px"
+            @confirm="deleteUser(row.id)"
+          >
             <template #reference>
               <el-button type="primary" size="small" @click="" icon="Delete">
                 删除
@@ -160,6 +182,7 @@
 </template>
 
 <script setup lang="ts">
+import useLayoutSettingStore from '@/store/modules/setting'
 import { ref, onMounted, reactive, nextTick } from 'vue'
 import {
   reqUserInfo,
@@ -167,7 +190,7 @@ import {
   reqAllRole,
   reqSetUserRole,
   reqDeleteAllUser,
-  reqDeleteUser
+  reqDeleteUser,
 } from '@/api/acl/user'
 import type {
   UserResponseData,
@@ -190,6 +213,7 @@ let isIndeterminate = ref<boolean>(true)
 
 let allRole = ref<AllRole>([])
 let userRole = ref<AllRole>([])
+let selectIdArr = ref<number[]>([])
 // 收集用户的响应式数据
 let userParams = reactive<User>({
   username: '',
@@ -200,9 +224,16 @@ let formRef = ref<any>()
 onMounted(() => {
   getHasUser()
 })
+let keyword = ref<string>('')
+let settingStore = useLayoutSettingStore()
+
 const getHasUser = async (pager = 1) => {
   pageNo.value = pager
-  let result: UserResponseData = await reqUserInfo(pageNo.value, pageSize.value)
+  let result: UserResponseData = await reqUserInfo(
+    pageNo.value,
+    pageSize.value,
+    keyword.value,
+  )
   if (result.code == 200) {
     userArr.value = result.data.records
     total.value = result.data.total
@@ -324,13 +355,37 @@ const deleteUser = async (userId: number) => {
       type: 'success',
       message: '删除成功',
     })
-    getHasUser(userArr.value.length >1?pageNo.value:pageNo.value-1)
+    getHasUser(userArr.value.length > 1 ? pageNo.value : pageNo.value - 1)
   } else {
     ElMessage({
       type: 'error',
       message: '删除失败',
     })
   }
+}
+const handleSelectionChange = (val: any) => {
+  selectIdArr.value = val.map((item: any) => item.id)
+}
+const deleteSelectUser = async () => {
+  let result = await reqDeleteAllUser(selectIdArr.value)
+  if (result.code == 200) {
+    ElMessage({
+      type: 'success',
+      message: '批量删除成功',
+    })
+    getHasUser(userArr.value.length > 1 ? pageNo.value : pageNo.value - 1)
+  } else {
+    ElMessage({
+      type: 'error',
+      message: '批量删除失败',
+    })
+  }
+}
+const search = () => {
+  getHasUser()
+}
+const reset = () => {
+  settingStore.refresh = !settingStore.refresh
 }
 </script>
 

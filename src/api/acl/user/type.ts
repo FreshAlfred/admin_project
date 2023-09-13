@@ -27,12 +27,11 @@ export interface UserResponseData extends ResponseData {
   }
 }
 
-
 export interface RoleData {
-  id?: number,
-  createTime?: string,
-  updateTime?: string,
-  roleName: string,
+  id?: number
+  createTime?: string
+  updateTime?: string
+  roleName: string
   remark: string
 }
 
@@ -40,12 +39,12 @@ export type AllRole = RoleData[]
 
 export interface RoleResponseData extends ResponseData {
   data: {
-    assignRoles: AllRole,
+    assignRoles: AllRole
     allRolesList: AllRole
   }
 }
 
 export interface SetRoleData {
-  userId: number,
+  userId: number
   roleIdList: number[]
 }
