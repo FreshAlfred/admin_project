@@ -5,12 +5,7 @@
         <el-input placeholder="请输入搜索职位" v-model="keyword"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          size="default"
-          @click="search"
-          :disabled="!keyword"
-        >
+        <el-button type="primary" size="default" @click="search" :disabled="!keyword">
           搜索
         </el-button>
         <el-button type="primary" size="default" @click="reset">重置</el-button>
@@ -18,36 +13,21 @@
     </el-form>
   </el-card>
   <el-card>
-    <el-button type="primary" size="default" @click="" icon="Plus">
+    <el-button type="primary" size="default" @click="addRole" icon="Plus">
       添加职位
     </el-button>
     <el-table border style="margin: 10px 0" :data="allRoleArr">
       <el-table-column type="index" align="center" label="#"></el-table-column>
       <el-table-column label="ID" align="center" prop="id"></el-table-column>
-      <el-table-column
-        label="角色名称"
-        align="center"
-        show-overflow-tooltip
-        prop="roleName"
-      ></el-table-column>
-      <el-table-column
-        label="创建时间"
-        align="center"
-        show-overflow-tooltip
-        prop="createTime"
-      ></el-table-column>
-      <el-table-column
-        label="更新时间"
-        align="center"
-        show-overflow-tooltip
-        prop="updateTime"
-      ></el-table-column>
+      <el-table-column label="角色名称" align="center" show-overflow-tooltip prop="roleName"></el-table-column>
+      <el-table-column label="创建时间" align="center" show-overflow-tooltip prop="createTime"></el-table-column>
+      <el-table-column label="更新时间" align="center" show-overflow-tooltip prop="updateTime"></el-table-column>
       <el-table-column label="操作" width="280px" align="center">
         <template #="{ row, $index }">
           <el-button type="primary" size="small" @click="" icon="User">
             分配权限
           </el-button>
-          <el-button type="primary" size="small" @click="" icon="Edit">
+          <el-button type="primary" size="small" @click="updateRole(row)" icon="Edit">
             编辑
           </el-button>
           <el-button type="primary" size="small" @click="" icon="Delete">
@@ -56,30 +36,42 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      v-model:current-page="pageNo"
-      v-model:page-size="pageSize"
-      :page-sizes="[5, 7, 9, 11]"
-      @current-change="getHasRole"
-      @size-change="sizeChange"
-      :background="true"
-      layout="prev, pager, next, jumper, -> , sizes, total"
-      :total="total"
-    />
+    <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[5, 7, 9, 11]"
+      @current-change="getHasRole" @size-change="sizeChange" :background="true"
+      layout="prev, pager, next, jumper, -> , sizes, total" :total="total" />
   </el-card>
+  <el-dialog v-model="dialogVisible" :title="roleParams.id?'更新职位':'添加职位'">
+    <el-form :model="roleParams" :rules="rules" ref="form">
+      <el-form-item label="职位名称" prop="roleName">
+        <el-input placeholder="请您输入职位名称" v-model="roleParams.roleName"></el-input>
+
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <el-button type="primary" size="default" @click="dialogVisible=false">取消</el-button>
+      <el-button type="primary" size="default" @click="save">确定</el-button>
+    </template> 
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { reqAllRoleList } from '@/api/acl/role'
-import type { RoleResponseData, Records } from '@/api/acl/role/type'
+import { ref, onMounted, reactive, nextTick } from 'vue'
+import { reqAllRoleList,reqAddOrUpdateRole } from '@/api/acl/role'
+import type { RoleResponseData, Records, RoleData } from '@/api/acl/role/type'
 import useLayoutSettingStore from '@/store/modules/setting'
+import { ElMessage } from 'element-plus';
 let settingStore = useLayoutSettingStore()
 let pageNo = ref(1)
 let pageSize = ref(1)
 let total = ref(100)
 let keyword = ref('')
 let allRoleArr = ref<Records>([])
+let dialogVisible = ref<boolean>(false)
+let form = ref<any>()
+let roleParams = reactive<RoleData>({
+  roleName: ''
+})
+
 const getHasRole = async (pager = 1) => {
   pageNo.value = pager
   let result: RoleResponseData = await reqAllRoleList(
@@ -87,7 +79,7 @@ const getHasRole = async (pager = 1) => {
     pageSize.value,
     keyword.value,
   )
-  console.log(result)
+
   if (result.code == 200) {
     allRoleArr.value = result.data.records
     total.value = result.data.total
@@ -104,6 +96,56 @@ const search = () => {
 }
 const reset = () => {
   settingStore.refresh = !settingStore.refresh
+}
+const addRole = () => {
+  dialogVisible.value = true
+  Object.assign(roleParams, {
+    roleName: '',
+    id: 0
+  })
+  nextTick(() => {
+    form.value.clearValidate()
+  })
+}
+const updateRole = (row: RoleData) => {
+  dialogVisible.value = true
+  Object.assign(roleParams, row)
+  nextTick(() => {
+    form.value.clearValidate()
+  })
+}
+
+const validatorRoleName = (rule: any, value: any, callback: any) => {
+  if(value.trim().length >= 2) {
+    callback();
+  } else {
+    callback(new Error('职位名称至少两位！'))
+  }
+}
+// 职位的校验规则
+const rules = {
+  roleName: [
+    {required: true, trigger:'blur', validator: validatorRoleName}
+  ]
+}
+
+const save = async () => {
+  await form.value.validate();
+  let result: any= await reqAddOrUpdateRole(roleParams)
+  if(result.code === 200) {
+    ElMessage({
+      type: 'success',
+      message:  roleParams.id?'更新成功':'添加成功'
+    })
+    dialogVisible.value = false;
+    getHasRole(roleParams.id?pageNo.value:1)
+  } else {
+    ElMessage({
+      type: 'success',
+      message:  roleParams.id?'更新失败':'添加失败'
+    })
+    dialogVisible.value = false;
+  }
 }
 </script>
 
