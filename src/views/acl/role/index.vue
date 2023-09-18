@@ -2,11 +2,18 @@
   <el-card>
     <el-form :inline="true" class="form">
       <el-form-item label="职位搜索">
-        <el-input placeholder="请输入搜索职位"></el-input>
+        <el-input placeholder="请输入搜索职位" v-model="keyword"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="default" @click="">搜索</el-button>
-        <el-button type="primary" size="default" @click="">重置</el-button>
+        <el-button
+          type="primary"
+          size="default"
+          @click="search"
+          :disabled="!keyword"
+        >
+          搜索
+        </el-button>
+        <el-button type="primary" size="default" @click="reset">重置</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -66,7 +73,8 @@
 import { ref, onMounted } from 'vue'
 import { reqAllRoleList } from '@/api/acl/role'
 import type { RoleResponseData, Records } from '@/api/acl/role/type'
-
+import useLayoutSettingStore from '@/store/modules/setting'
+let settingStore = useLayoutSettingStore()
 let pageNo = ref(1)
 let pageSize = ref(1)
 let total = ref(100)
@@ -90,6 +98,12 @@ onMounted(() => {
 })
 const sizeChange = () => {
   getHasRole()
+}
+const search = () => {
+  getHasRole()
+}
+const reset = () => {
+  settingStore.refresh = !settingStore.refresh
 }
 </script>
 
