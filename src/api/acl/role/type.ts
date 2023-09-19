@@ -34,6 +34,6 @@ export interface MenuData {
   type: number
   status: number | null
   level: number
-  children: [],
+  children: []
   select: boolean
-} 
+}
