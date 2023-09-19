@@ -5,6 +5,7 @@ enum API {
   ALLROLE_URL = '/admin/acl/role/',
   ADDROLE_URL = '/admin/acl/role/save',
   UPDATEROLE_URL = '/admin/acl/role/update',
+  ALLPERMISSION = '/admin/acl/permission/toAssign/',
 }
 
 export const reqAllRoleList = (
@@ -23,4 +24,8 @@ export const reqAddOrUpdateRole = (data: RoleData) => {
   } else {
     return request.post<any, any>(API.ADDROLE_URL, data)
   }
+}
+
+export const reqAllMenuList = (roleId: number) => {
+  return request.get<any, any>(API.ALLPERMISSION + roleId)
 }

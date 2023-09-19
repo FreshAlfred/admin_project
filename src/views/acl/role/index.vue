@@ -24,7 +24,7 @@
       <el-table-column label="更新时间" align="center" show-overflow-tooltip prop="updateTime"></el-table-column>
       <el-table-column label="操作" width="280px" align="center">
         <template #="{ row, $index }">
-          <el-button type="primary" size="small" @click="" icon="User">
+          <el-button type="primary" size="small" @click="setPermission" icon="User">
             分配权限
           </el-button>
           <el-button type="primary" size="small" @click="updateRole(row)" icon="Edit">
@@ -50,8 +50,23 @@
     <template #footer>
       <el-button type="primary" size="default" @click="dialogVisible=false">取消</el-button>
       <el-button type="primary" size="default" @click="save">确定</el-button>
-    </template> 
+    </template>
   </el-dialog>
+  <!-- 抽屉组件，分配职位权限 -->
+  <el-drawer v-model="drawer">
+    <template #header>
+      <h4>分配菜单与按钮的权限</h4>
+    </template>
+    <template #default>
+      <el-tree>
+        
+      </el-tree>
+    </template>
+    <template #footer>
+      <el-button  size="default" @click="drawer=false">取消</el-button>
+      <el-button type="primary" size="default" @click="">确定</el-button>
+    </template>
+  </el-drawer>
 </template>
 
 <script setup lang="ts">
@@ -62,7 +77,7 @@ import useLayoutSettingStore from '@/store/modules/setting'
 import { ElMessage } from 'element-plus';
 let settingStore = useLayoutSettingStore()
 let pageNo = ref(1)
-let pageSize = ref(1)
+let pageSize = ref(5)
 let total = ref(100)
 let keyword = ref('')
 let allRoleArr = ref<Records>([])
@@ -71,7 +86,7 @@ let form = ref<any>()
 let roleParams = reactive<RoleData>({
   roleName: ''
 })
-
+let drawer = ref<boolean>(false)
 const getHasRole = async (pager = 1) => {
   pageNo.value = pager
   let result: RoleResponseData = await reqAllRoleList(
@@ -146,6 +161,9 @@ const save = async () => {
     })
     dialogVisible.value = false;
   }
+}
+const setPermission = () => {
+  drawer.value = true
 }
 </script>
 
