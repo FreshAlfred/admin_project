@@ -47,7 +47,7 @@
           <el-button
             type="primary"
             size="small"
-            @click="setPermission"
+            @click="setPermission(row)"
             icon="User"
           >
             分配权限
@@ -60,9 +60,18 @@
           >
             编辑
           </el-button>
-          <el-button type="primary" size="small" @click="" icon="Delete">
-            删除
-          </el-button>
+
+          <el-popconfirm
+            :title="`你确定要删除 ${row.roleName} 吗?`"
+            width="250"
+            @confirm="deleteRole(row)"
+          >
+            <template #reference>
+              <el-button type="primary" size="small" icon="Delete">
+                删除
+              </el-button>
+            </template>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -102,19 +111,39 @@
       <h4>分配菜单与按钮的权限</h4>
     </template>
     <template #default>
-      <el-tree></el-tree>
+      <el-tree
+        ref="tree"
+        :data="menuArr"
+        :props="defaultProps"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        :default-checked-keys="selectArr"
+      ></el-tree>
     </template>
     <template #footer>
       <el-button size="default" @click="drawer = false">取消</el-button>
-      <el-button type="primary" size="default" @click="">确定</el-button>
+      <el-button type="primary" size="default" @click="handler">确定</el-button>
     </template>
   </el-drawer>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, reactive, nextTick } from 'vue'
-import { reqAllRoleList, reqAddOrUpdateRole } from '@/api/acl/role'
-import type { RoleResponseData, Records, RoleData } from '@/api/acl/role/type'
+import {
+  reqAllRoleList,
+  reqAddOrUpdateRole,
+  reqAllMenuList,
+  reqSetPermission,
+  reqDeleteRole,
+} from '@/api/acl/role'
+import type {
+  RoleResponseData,
+  Records,
+  RoleData,
+  MenuResponseData,
+  MenuList,
+} from '@/api/acl/role/type'
 import useLayoutSettingStore from '@/store/modules/setting'
 import { ElMessage } from 'element-plus'
 let settingStore = useLayoutSettingStore()
@@ -128,7 +157,15 @@ let form = ref<any>()
 let roleParams = reactive<RoleData>({
   roleName: '',
 })
+let tree = ref<any>()
 let drawer = ref<boolean>(false)
+// 存储勾选的节点id的数组
+let selectArr = ref<number[]>([])
+const defaultProps = {
+  children: 'children',
+  label: 'name',
+}
+let menuArr = ref<MenuList>([])
 const getHasRole = async (pager = 1) => {
   pageNo.value = pager
   let result: RoleResponseData = await reqAllRoleList(
@@ -202,8 +239,57 @@ const save = async () => {
     dialogVisible.value = false
   }
 }
-const setPermission = () => {
+const setPermission = async (row: RoleData) => {
   drawer.value = true
+  // 收集当前的id
+  Object.assign(roleParams, row)
+  // 根据职位获取权限数据
+  let result: MenuResponseData = await reqAllMenuList(roleParams.id as number)
+  if (result.code == 200) {
+    menuArr.value = result.data
+    selectArr.value = filterSelectArr(menuArr.value, [])
+  }
+}
+const filterSelectArr = (allData: any, initArr: any) => {
+  allData.forEach((item: any) => {
+    if (item.select && item.level == 4) {
+      initArr.push(item.id)
+    }
+    if (item.children && item.children.length > 0) {
+      filterSelectArr(item.children, initArr)
+    }
+  })
+  return initArr
+}
+const handler = async () => {
+  const roleId = roleParams.id as number
+  let arr = tree.value.getCheckedKeys()
+  // 还有半选的id
+  let arr1 = tree.value.getHalfCheckedKeys()
+  let result: any = await reqSetPermission(roleId, [...arr, ...arr1])
+  if (result.code == 200) {
+    ElMessage({
+      type: 'success',
+      message: '分配权限成功',
+    })
+    window.location.reload()
+  } else {
+    ElMessage({
+      type: 'error',
+      message: '分配权限失败',
+    })
+  }
+  drawer.value = false
+}
+
+const deleteRole = async (row: RoleData) => {
+  let result = await reqDeleteRole(row.id as number)
+  if (result.code === 200) {
+    ElMessage.success('删除成功')
+    getHasRole(allRoleArr.value.length > 0 ? pageNo.value : pageNo.value - 1)
+  } else {
+    ElMessage.success('删除失败')
+  }
 }
 </script>
 

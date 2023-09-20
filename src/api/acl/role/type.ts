@@ -32,8 +32,14 @@ export interface MenuData {
   code: string
   toCode: string
   type: number
-  status: number | null
+  status: null
   level: number
-  children: []
+  children?: MenuList
   select: boolean
+}
+
+export type MenuList = MenuData[]
+
+export interface MenuResponseData extends ResponseData {
+  data: MenuList
 }
