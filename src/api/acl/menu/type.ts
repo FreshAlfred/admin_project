@@ -24,3 +24,11 @@ export type PermissionList = Permission[]
 export interface PermissionResponseData extends ResponseData {
   data: PermissionList
 }
+
+export interface MenuParamas {
+  id?: number
+  code: string
+  name: string
+  level: number
+  pid: number
+}

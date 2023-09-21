@@ -12,7 +12,32 @@
     icon="FullScreen"
   ></el-button>
 
-  <el-button size="small" circle icon="Setting"></el-button>
+  <el-popover placement="bottom" title="主题设置" :width="300" trigger="hover">
+    <el-form>
+      <el-form-item label="主题颜色">
+        <el-color-picker
+          @change="changeColor"
+          show-alpha
+          :predefine="predefineColors"
+          v-model="color"
+        ></el-color-picker>
+      </el-form-item>
+      <el-form-item label="暗黑模式">
+        <el-switch
+          v-model="isDark"
+          size="small"
+          active-icon="Moon"
+          inactive-icon="Sunny"
+          inline-prompt
+          @change="changeDark"
+        ></el-switch>
+      </el-form-item>
+    </el-form>
+    <template #reference>
+      <el-button size="small" circle icon="Setting"></el-button>
+    </template>
+  </el-popover>
+
   <img
     :src="userStore.avatar"
     style="width: 24px; height: 24px; margin: 0 10px; border-radius: 50%"
@@ -34,12 +59,31 @@
 <script setup lang="ts">
 import useLayoutSettingStore from '@/store/modules/setting'
 import useUserStore from '@/store/modules/user'
+import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 let $router = useRouter()
 let $route = useRoute()
 let userStore = useUserStore()
 const layOutSettingStore = useLayoutSettingStore()
-
+let isDark = ref<boolean>(false)
+// 主题
+const color = ref('rgba(255, 69, 0, 0.68)')
+const predefineColors = ref([
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585',
+  'rgba(255, 69, 0, 0.68)',
+  'rgb(255, 120, 0)',
+  'hsv(51, 100, 98)',
+  'hsva(120, 40, 94, 0.5)',
+  'hsl(181, 100%, 37%)',
+  'hsla(209, 100%, 56%, 0.73)',
+  '#c7158577',
+])
 const updateRefresh = () => {
   layOutSettingStore.refresh = !layOutSettingStore.refresh
 }
@@ -54,6 +98,14 @@ const fullScreen = () => {
 const logout = async () => {
   await userStore.userLogout()
   $router.push({ path: '/login', query: { redirect: $route.path } })
+}
+const changeDark = () => {
+  let html = document.documentElement
+  isDark.value ? (html.className = 'dark') : (html.className = '')
+}
+const changeColor = () => {
+  const html = document.documentElement
+  html.style.setProperty('--el-color-primary', color.value)
 }
 </script>
 
