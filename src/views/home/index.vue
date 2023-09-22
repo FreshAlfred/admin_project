@@ -11,7 +11,6 @@
   <div class="bottom_svg">
     <svg-icon name="welcome" width="500px" height="500px"></svg-icon>
   </div>
-  <div class="test_box"></div>
 </template>
 
 <script setup lang="ts">
@@ -21,17 +20,6 @@ let userStore = useUserStore()
 </script>
 
 <style scoped lang="scss">
-@mixin test {
-  background-color: black;
-}
-.test_box {
-  width: 100px;
-  height: 100px;
-  background-color: orange;
-  &:hover {
-    background-color: skyblue;
-  }
-}
 .box-card {
   display: flex;
 
