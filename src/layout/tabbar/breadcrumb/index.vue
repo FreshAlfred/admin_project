@@ -11,7 +11,7 @@
       v-show="!item.meta.hidden"
       :to="item.path"
     >
-      <el-icon style="margin: 0 5px">
+      <el-icon style="margin: 0 5px" v-if="item.meta.icon">
         <component :is="item.meta.icon"></component>
       </el-icon>
       <span>{{ item.meta.title }}</span>

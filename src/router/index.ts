@@ -8,6 +8,7 @@ export const routes = [
     meta: {
       title: '登录',
       hidden: true,
+      icon: '',
     },
   },
   // 登录成功以后展示数据的路由
@@ -155,6 +156,7 @@ export const routes = [
     meta: {
       title: '任意路由',
       hidden: true,
+      icon: '',
     },
   },
 ]
