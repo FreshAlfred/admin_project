@@ -2,7 +2,9 @@
   <div class="container">
     <!-- 数据大屏展示内容 -->
     <div class="screen" ref="screen">
-      <div class="top">顶部</div>
+      <div class="top">
+        <Top />
+      </div>
       <div class="bottom">
         <div class="bottom__left">左侧</div>
         <div class="bottom__center">中间</div>
@@ -13,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import Top from './components/top/index.vue'
 import { ref, onMounted } from 'vue'
 let screen = ref()
 onMounted(() => {
@@ -33,14 +36,38 @@ function getScale(w = 1920, h = 1080) {
   height: 100vh;
   background: url(./images/bg.png) no-repeat;
   background-size: cover;
+
   .screen {
     position: fixed;
     width: 1920px;
     height: 1080px;
-    background-color: red;
     left: 50%;
     top: 50%;
+    // 缩放基点设置为左上角
     transform-origin: left top;
+
+    .top {
+      width: 100%;
+      height: 40px;
+    }
+
+    .bottom {
+      display: flex;
+
+      &__right {
+        flex: 1;
+      }
+
+      &__left {
+        flex: 1;
+        background: red;
+      }
+
+      &__center {
+        flex: 2;
+        height: 1040px;
+      }
+    }
   }
 }
 </style>
