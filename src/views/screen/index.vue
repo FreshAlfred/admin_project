@@ -6,7 +6,11 @@
         <Top />
       </div>
       <div class="bottom">
-        <div class="bottom__left">左侧</div>
+        <div class="bottom__left">
+          <Tourist class="tourist"></Tourist>
+          <Sex class="sex"></Sex>
+          <Age class="age"></Age>
+        </div>
         <div class="bottom__center">中间</div>
         <div class="bottom__right">右侧</div>
       </div>
@@ -16,6 +20,9 @@
 
 <script setup lang="ts">
 import Top from './components/top/index.vue'
+import Tourist from './components/tourist/index.vue'
+import Sex from './components/sex/index.vue'
+import Age from './components/age/index.vue'
 import { ref, onMounted } from 'vue'
 let screen = ref()
 onMounted(() => {
@@ -60,7 +67,18 @@ function getScale(w = 1920, h = 1080) {
 
       &__left {
         flex: 1;
-        background: red;
+        display: flex;
+        flex-direction: column;
+        .tourist {
+          flex: 1.2;
+        }
+        .sex {
+          flex: 1;
+        }
+
+        .age {
+          flex: 1;
+        }
       }
 
       &__center {
