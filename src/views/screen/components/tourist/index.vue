@@ -12,13 +12,44 @@
     <div class="number">
       <span v-for="(item, index) in people" :key="index">{{ item }}</span>
     </div>
-    <div class="charts">123</div>
+    <div class="charts" ref="charts">123</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import * as echarts from 'echarts'
+import 'echarts-liquidfill'
 let people = ref('21550人')
+let charts = ref()
+
+onMounted(() => {
+  let myCharts = echarts.init(charts.value)
+  myCharts.setOption({
+    title: {
+      text: '水球图',
+    },
+    series: [
+      {
+        type: 'liquidFill',
+        data: [0.6, 0.4, 0.2, 0.1],
+        waveAnimation: true,
+        animationDuration: 1000,
+        animationEasing: 'cubicInOut',
+        radius: '100%',
+        outline: {
+          show: true,
+          borderDistance: 8,
+          itemStyle: {
+            color: 'skyblue',
+            borderColor: '#294D99',
+            borderWidth: 8,
+          },
+        },
+      },
+    ],
+  })
+})
 </script>
 
 <style scoped lang="scss">
@@ -64,8 +95,7 @@ let people = ref('21550人')
   }
   .charts {
     width: 100%;
-    height: 250px;
-    background-color: red;
+    height: 260px;
   }
 }
 </style>
